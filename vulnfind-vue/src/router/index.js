@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../components/Home.vue'
+import Login from '@/views/Login'
+import Users from '@/views/system/Users'
 
 Vue.use(VueRouter)
 
@@ -9,12 +9,22 @@ const routes = [
   {
     path: '/',
     name: 'Index',
-    redirect: {name: "Login"}
+    redirect: { name: 'Login' }
   },
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: () => import('../views/Home'),
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      {
+        path: '/users',
+        name: '用户管理',
+        component: Users
+      }
+    ]
   },
   {
     path: '/login',
@@ -24,9 +34,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  //去除url中的#
   mode: 'history',
-  // base: process.env.BASE_URL,
+  base: process.env.BASE_URL,
   routes
 })
 

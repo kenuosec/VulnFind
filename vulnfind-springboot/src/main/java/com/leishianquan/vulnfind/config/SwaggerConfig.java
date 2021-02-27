@@ -27,7 +27,7 @@ public class SwaggerConfig {
     //配置在线文档的基本信息
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("vulnfind文档")
+                .title("漏洞发现平台API文档")
                 .description("SpringBoot整合Swagger,供前端使用")
                 .contact("唐小风")
                 .termsOfServiceUrl("http://localhost:8888/doc.html")

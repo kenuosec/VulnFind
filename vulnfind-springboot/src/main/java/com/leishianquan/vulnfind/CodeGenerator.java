@@ -44,11 +44,12 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-
         gc.setAuthor("txf");
         gc.setOpen(false);
         //实体属性 Swagger2 注解
         gc.setSwagger2(true);
+        //是否自动覆盖文件
+        gc.setFileOverride(false);
         gc.setServiceName("%sService");
         mpg.setGlobalConfig(gc);
 

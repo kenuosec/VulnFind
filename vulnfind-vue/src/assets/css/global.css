@@ -1,7 +1,8 @@
-html, 
-body, 
+html,
+body,
 #app{
     height: 100%;
+    /*内边距外边距*/
     margin: 0;
     padding: 0;
 }

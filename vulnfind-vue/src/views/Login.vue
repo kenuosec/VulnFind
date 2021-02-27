@@ -22,9 +22,13 @@
         <el-form-item prop="password">
           <el-input
             v-model="ruleForm.password"
-            prefix-icon="el-icon-lollipop"
+            prefix-icon="el-icon-lock"
             type="password"
           ></el-input>
+<!--          <el-input-->
+<!--              v-model="ruleForm.verifyCode"-->
+<!--              prefix-icon="el-icon-phone"-->
+<!--          ></el-input>-->
         </el-form-item>
 
         <el-form-item class="btns">
@@ -42,15 +46,16 @@ export default {
     return {
       ruleForm: {
         username: 'txf',
-        password: '111111'
+        password: '111111',
+        verifyCode: ''
       },
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+          { min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请选择密码', trigger: 'change' }
+          { required: true, message: '请输入密码', trigger: 'change' }
         ]
       }
     }
@@ -65,10 +70,8 @@ export default {
             console.log(res.data)
             const jwt = res.headers.authorization
             const userInfo = res.data.data
-            // 把数据共享出去
             _this.$store.commit('SET_TOKEN', jwt)
             _this.$store.commit('SET_USERINFO', userInfo)
-            // 获取
             console.log(_this.$store.getters.getUser)
             _this.$router.push('/home')
           })
@@ -94,7 +97,9 @@ export default {
   width: 450px;
   height: 300px;
   background-color: #fff;
+  //边框
   border-radius: 3px;
+  //居中
   position: absolute;
   left: 50%;
   top: 50%;
@@ -104,7 +109,9 @@ export default {
   .avatar_box {
     height: 130px;
     width: 130px;
+    //圆角
     border-radius: 50%;
+    //内边距
     padding: 10px;
     position: absolute;
     left: 50%;
@@ -114,21 +121,22 @@ export default {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background-color: #eee;
+      background-color: #EEE;
     }
   }
 }
 .login_form {
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
   //border: 1px solid #eaeaea;
   //box-shadow: 0 0 25px #cac6c6;
+  .btns {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
-.btns {
-  display: flex;
-  justify-content: flex-end;
-}
+
 </style>

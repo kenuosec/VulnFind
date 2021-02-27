@@ -8,6 +8,7 @@
         </template>
         <MenuTree :menuList="item.children"></MenuTree>
       </el-submenu>
+
       <el-menu-item
           v-else
           :disabled="item.disabled"
@@ -35,9 +36,8 @@ export default {
   }
 }
 </script>
-
 <style scoped>
-/*实现了一个溢出处理*/
+/*实现了一个菜单栏突出处理*/
 .el-menu--collapse span,
 .el-menu--collapse i.el-submenu__icon-arrow {
   height: 0;
@@ -46,5 +46,4 @@ export default {
   visibility: hidden;
   display: inline-block;
 }
-
 </style>

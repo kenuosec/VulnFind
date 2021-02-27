@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/Login'
-import Users from '@/views/system/Users'
+import Users from '@/views/user/Users'
 
 Vue.use(VueRouter)
 
@@ -22,7 +22,7 @@ const routes = [
       {
         path: '/users',
         name: '用户管理',
-        component: Users
+        component: () => import('../views/user/Users')
       }
     ]
   },

@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // 捕捉shiro的异常
+    /**
+     * 捕捉shiro的异常
+     */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = ShiroException.class)
     public Result handler(ShiroException e) {
-        log.error("运行时异常：----------------{}", e);
+        log.error("未授权时异常：----------------{}", e);
         return Result.fail(401, e.getMessage(), null);
     }
     /**
@@ -30,10 +32,8 @@ public class GlobalExceptionHandler {
         log.error("实体校验异常：----------------{}", e);
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
-
         return Result.fail(objectError.getDefaultMessage());
     }
-
     /**
      * 处理Assert的异常
      */
@@ -43,7 +43,6 @@ public class GlobalExceptionHandler {
         log.error("Assert异常：----------------{}", e);
         return Result.fail(e.getMessage());
     }
-
     /**
      * 捕捉其他异常
      */

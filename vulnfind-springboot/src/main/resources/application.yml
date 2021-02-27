@@ -8,6 +8,11 @@ spring:
     url: jdbc:mysql://localhost:3306/vulnfind?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: woaini520
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
 

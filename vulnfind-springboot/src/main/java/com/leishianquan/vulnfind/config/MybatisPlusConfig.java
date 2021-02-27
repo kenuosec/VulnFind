@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.leishianquan.vulnfind.mapper")
 public class MybatisPlusConfig {
 
-    //PaginationInterceptor分页插件，提示弃用，但是新版本setUseDeprecatedExecutor也提示弃用，就不改了
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();

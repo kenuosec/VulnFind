@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-//统一结果封装
 @Data
 public class Result implements Serializable {
 
@@ -39,5 +38,4 @@ public class Result implements Serializable {
         r.setData(data);
         return r;
     }
-
 }

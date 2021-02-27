@@ -2,11 +2,13 @@
   <el-container class="main_container">
     <!--头部布局-->
     <el-header>
+
       <!--logo和项目名称-->
       <div class="left_box">
         <img src="../assets/img/timg.gif">
         <span>漏洞发现平台</span>
       </div>
+
       <!--用户登录展示的头像-->
       <div class="right_box">
         <el-dropdown>
@@ -27,6 +29,7 @@
       </div>
     </el-header>
     <el-container>
+
       <!--侧边栏-->
       <el-aside :width="isCollapse?'64px':'200px'">
         <!--展开/收起-->
@@ -56,6 +59,7 @@
 
 <script>
 import MenuTree from '../components/MenuTree'
+
 export default {
   name: 'Main',
   props: {
@@ -65,6 +69,7 @@ export default {
     return {
       user: {
       },
+      // 默认不收起菜单栏
       isCollapse: false,
       activePath: '',
       MenuList: [
@@ -382,40 +387,33 @@ export default {
 .main_container {
   height: 100%;
 }
-
 /*头部布局*/
 .el-header {
   background-color: #001529;
+
   display: flex;
   justify-content: space-between;
   padding-left: 0;
   color: #FFFFFF;
   align-items: center;
   font-size: 20px;
-
   /*左边logo和标题*/
-
   .left_box {
+    //color: #001529;
+    font-size: 30px;
     display: flex;
     align-items: center;
-
-    /*logo*/
-
     img {
       width: 60px;
       height: 60px;
       margin: 0px 0px 10px 15px;
     }
-
-    /*标题*/
-
+    /*标题离logo间隔*/
     span {
-      margin-left: 15px;
+      margin-left: 30px;
     }
   }
-
   /*右边的登录头像*/
-
   .right_box {
     .el-dropdown > img {
       width: 60px;
@@ -427,19 +425,15 @@ export default {
     }
   }
 }
-
 /*侧边栏*/
 .el-aside {
   background-color: #001529;
-
   .el-menu {
     border-right: none;
   }
-
   /*展开/收起*/
-
   .toggle_box {
-    background-color: chartreuse;
+    background-color: #252822;
     font-size: 15px;
     font-weight: bold;
     line-height: 24px;
@@ -447,15 +441,12 @@ export default {
     letter-spacing: 0.2em;
     text-align: center;
     cursor: pointer;
-
   }
 }
-
 /*内容主体*/
 .el-main {
   background-color: #E9EEF3;
 }
-
 /*下拉菜单的样式*/
 .el-dropdown-link {
   cursor: pointer;

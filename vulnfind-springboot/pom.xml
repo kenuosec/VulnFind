@@ -117,6 +117,18 @@
             <artifactId>spring-boot-starter-validation</artifactId>
             <version>2.4.3</version>
         </dependency>
+<!--阿里oss服务-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.10.2</version>
+        </dependency>
+<!--&lt;!&ndash;日期格式转换&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>joda-time</groupId>-->
+<!--            <artifactId>joda-time</artifactId>-->
+<!--            <version>2.10.5</version>-->
+<!--        </dependency>-->
 
 
     </dependencies>

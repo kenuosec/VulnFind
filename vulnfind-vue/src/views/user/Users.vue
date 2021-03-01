@@ -118,7 +118,7 @@ export default {
     return {
       addOrUpdateVisible: false,
       userVO: {
-        departmentId: '',
+        departmentId: 1,
         username: '',
         email: ''
       },

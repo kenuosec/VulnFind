@@ -48,7 +48,7 @@ public class AccountController {
         return Result.succ(MapUtil.builder()
                 .put("id", user.getId())
                 .put("username", user.getUsername())
-//                .put("avatar", user.getAvatar())
+                .put("avatar", user.getAvatar())
                 .put("email", user.getEmail())
                 .map()
         );

@@ -27,3 +27,14 @@ export const deleteImgFile = (file) => {
     }
   })
 }
+
+export const saveUser = (user) => {
+  return axios({
+    url: '/user/addUser',
+    method: 'post',
+    data: user,
+    headers: {
+      Authorization: localStorage.getItem('token')
+    }
+  })
+}

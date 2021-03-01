@@ -16,4 +16,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
     IPage<User> findUserPage(Page<User> page, QueryWrapper<User> wrapper);
+
+
+    /**
+     * 添加用户
+     * @param user
+     */
+    void addUser(User user);
 }

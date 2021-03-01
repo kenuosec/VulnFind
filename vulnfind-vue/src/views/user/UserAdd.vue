@@ -2,14 +2,21 @@
   <div>
     <el-dialog v-bind="$attrs" :visible.sync="showDialog" v-on="$listeners" @open="onOpen" @close="onClose" title="Dialog Titile">
       <el-row :gutter="15">
-        <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
+        <el-form ref="elForm" :model="user" :rules="rules" size="medium" label-width="100px">
           <el-col :span="24">
+<!--            <el-form-item label="用户头像">-->
+<!--              &lt;!&ndash; 头衔缩略图 &ndash;&gt;-->
+<!--              <pan-thumb :image="image"/>-->
+<!--              &lt;!&ndash; 文件上传按钮 &ndash;&gt;-->
+<!--              <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">更换头像-->
+<!--              </el-button>-->
+<!--            <image-cropper-->
             <el-form-item label="用户头像">
               <pan-thumb :image="image" />
               <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">
-              选择头像
-            </el-button>
-            <image-cropper
+                选择头像
+              </el-button>
+              <image-cropper
                 v-show="imagecropperShow"
                 :width="300"
                 :height="300"
@@ -23,19 +30,19 @@
 
           <el-col :span="12">
             <el-form-item label="用户名" prop="username">
-              <el-input v-model="formData.username" placeholder="请输入用户名" clearable :style="{width: '100%'}"></el-input>
+              <el-input v-model="user.username" placeholder="请输入用户名" clearable :style="{width: '100%'}"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label="密码" prop="password">
-              <el-input v-model="formData.password" placeholder="请输入密码" clearable show-password :style="{width: '100%'}"></el-input>
+              <el-input v-model="user.password" placeholder="请输入密码" clearable show-password :style="{width: '100%'}"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label="角色" prop="departmentId">
-              <el-select v-model="formData.departmentId" placeholder="请选择角色" clearable :style="{width: '100%'}">
+              <el-select v-model="user.departmentId" placeholder="请选择角色" clearable :style="{width: '100%'}">
                 <el-option v-for="(item, index) in departmentIdOptions" :key="index" :label="item.label"
                   :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
@@ -44,7 +51,7 @@
 
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
-              <el-input v-model="formData.email" placeholder="请输入邮箱" clearable :style="{width: '100%'}">
+              <el-input v-model="user.email" placeholder="请输入邮箱" clearable :style="{width: '100%'}">
               </el-input>
             </el-form-item>
           </el-col>
@@ -64,7 +71,7 @@
 import ImageCropper from '../../components/ImageCropper'
 import PanThumb from '../../components/PanThumb'
 
-import {deleteImgFile} from "@/api/users";
+import {deleteImgFile,saveUser} from "@/api/users";
 
 export default {
   inheritAttrs: false,
@@ -80,8 +87,8 @@ export default {
   },
   data () {
     return {
-      formData: {
-        field101: null,
+      user: {
+        avatar: null,
         username: undefined,
         password: undefined,
         departmentId: undefined,
@@ -90,7 +97,7 @@ export default {
       showDialog: false,
       imagecropperShow: false,
       imagecrooperKey: 0,
-      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
+      image: 'https://avatars.githubusercontent.com/u/45926593',
       rules: {
         username: [{
           required: true,
@@ -116,12 +123,15 @@ export default {
       field101Action: 'https://jsonplaceholder.typicode.com/posts/',
       field101fileList: [],
       departmentIdOptions: [{
-        label: '选项一',
+        label: '管理员',
         value: 1
       }, {
-        label: '选项二',
+        label: '普通用户',
         value: 2
-      }]
+      },{
+        label: '访客',
+        value: 3
+      },]
     }
   },
   computed: {},
@@ -143,10 +153,31 @@ export default {
       this.$emit('changeShow', 'false')
     },
     handelConfirm () {
-      this.$refs.elForm.validate(valid => {
-        if (!valid) return
-        this.close()
+      this.$refs.['elForm'].validate(valid => {
+        if (!valid) {
+          return
+        }
+        console.log(this.user)
+        this.addUser()
       })
+    },
+    //添加用户
+    async addUser () {
+      const { data: res } = await saveUser(this.user)
+      if (res.code == 200){
+        this.$notify.success({
+          title: '操作成功',
+          message: '用户添加成功',
+        })
+        //关闭显示框
+        this.$emit('changeShow', 'false')
+        //清空当前用户
+        this.user = {}
+        this.$emit('getUserList');
+        this.$emit('getDeptAndCount');
+      }else {
+        return this.$message.error('用户添加失败:'+ res.message)
+      }
     },
     field101BeforeUpload (file) {
       const isRightSize = file.size / 1024 / 1024 < 2
@@ -162,9 +193,9 @@ export default {
       console.log(data)
       var oldImage = this.image;
       this.imagecropperShow = false
-      this.image = data.data;
-      this.imagecropperKey = this.imagecropperKey + 1
+      this.user.avatar = this.image = data.data;
       this.deleteAvatar(oldImage);
+      this.imagecropperKey = this.imagecropperKey + 1
     },
     //删除之前的头像
     async deleteAvatar(oldImage){

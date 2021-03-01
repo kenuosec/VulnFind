@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Date;
 import java.util.UUID;
@@ -222,7 +221,6 @@ public class AliOssServiceImpl implements AliOssService, InitializingBean {
         if (FilenameExtension.equalsIgnoreCase(".xml")) {
             return "text/xml";
         }
-
         return "image/jpg";
     }
 

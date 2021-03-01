@@ -101,4 +101,17 @@ public class UserController {
         return Result.succ(user);
     }
 
+
+    @PostMapping("/addUser")
+    @ApiOperation(value = "添加用户")
+    public Result addUser(@RequestBody User user){
+        try {
+            userService.addUser(user);
+            return Result.succ(null);
+        }catch (Exception e){
+            return Result.fail(null);
+        }
+    }
 }
+
+

@@ -38,3 +38,14 @@ export const saveUser = (user) => {
     }
   })
 }
+export const delUser = (id) => {
+  return axios({
+    url: '/user/deleteUser',
+    method: 'post',
+    data: id,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: localStorage.getItem('token')
+    }
+  })
+}

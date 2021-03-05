@@ -9,6 +9,7 @@
       <el-form :inline="true" :model="userVO" class="demo-form-inline">
         <el-form-item label="角色" lable-with="70px">
         <el-select v-model="userVO.departmentId" placeholder="请选择">
+
           <el-option
               v-for="item in departments"
               :key="item.id"
@@ -19,6 +20,7 @@
               <span class="el-tag el-tag--success el-tag--mini el-tag--plain">{{ item.deptCount }}</span>
             </span>
           </el-option>
+
         </el-select>
         </el-form-item>
         <el-form-item label="用户名" lable-with="200px">
@@ -35,7 +37,7 @@
           <el-button icon="el-icon-refresh" @click="resetUserVO">重置</el-button>
 
         </el-form-item>
-      </el-form>
+      </el-form >
       <el-table
           :data="userlist"
           border
@@ -86,9 +88,11 @@
         </el-table-column>
         <el-table-column
             label="操作">
+          <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
-            <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="del(scope.row.id)"></el-button>
             <el-button type="warning" size="mini" icon="el-icon-s-tools"></el-button>
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -107,10 +111,10 @@
 </template>
 
 <script>
-import { findUserList } from '@/api/users'
+import {findUserList, delUser, saveUser, deleteImgFile} from '@/api/users'
 import { findDeptAndCount } from '@/api/dept'
 
-import UserAdd from '@/views/user/UserAdd'
+import UserAdd  from '@/views/user/UserAdd'
 
 export default {
   name: 'Users',
@@ -137,7 +141,6 @@ export default {
   },
   components: {
     UserAdd
-
   },
   created () {
     this.getUserList()
@@ -176,9 +179,43 @@ export default {
       } else {
         this.addOrUpdateVisible = true
       }
+    },
+
+    /**
+     * 删除用户
+     */
+    async del(id) {
+      var res = await this.$confirm(
+          "此操作将永久删除该用户, 是否继续?",
+          "提示",
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }
+      ).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消删除"
+        });
+      });
+      if (res == "confirm") {
+        const { data: res } = await delUser(id);
+        console.log(res);
+        if (res.code == 200) {
+          this.$notify.success({
+            title:'操作成功',
+            message:'用户删除成功',
+          });
+          this.getUserList();
+        } else {
+          this.$message.error(res.msg);
+        }
+      }
+    },
+
+      }
     }
-  }
-}
 
 </script>
 

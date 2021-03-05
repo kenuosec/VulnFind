@@ -64,9 +64,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //设置用户邮箱
         user.setEmail(user.getEmail());
 
-        //user.setCreated(new Date());
-
-
         this.baseMapper.insert(user);
+    }
+
+
+//    @Override
+//    public void delUser(User user) {
+//        this.baseMapper.deleteById(user.getId());
+//    }
+    /**
+     * 删除用户
+     */
+    @Override
+    public void delUser(String id) {
+        this.baseMapper.deleteById(id);
     }
 }

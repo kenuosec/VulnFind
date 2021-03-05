@@ -1,16 +1,9 @@
 <template>
   <div>
-    <el-dialog v-bind="$attrs" :visible.sync="showDialog" v-on="$listeners" @open="onOpen" @close="onClose" title="Dialog Titile">
+    <el-dialog v-bind="$attrs" :visible.sync="showDialog" v-on="$listeners" @open="onOpen" @close="onClose" title="用户添加">
       <el-row :gutter="15">
         <el-form ref="elForm" :model="user" :rules="rules" size="medium" label-width="100px">
           <el-col :span="24">
-<!--            <el-form-item label="用户头像">-->
-<!--              &lt;!&ndash; 头衔缩略图 &ndash;&gt;-->
-<!--              <pan-thumb :image="image"/>-->
-<!--              &lt;!&ndash; 文件上传按钮 &ndash;&gt;-->
-<!--              <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">更换头像-->
-<!--              </el-button>-->
-<!--            <image-cropper-->
             <el-form-item label="用户头像">
               <pan-thumb :image="image" />
               <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">
@@ -92,7 +85,8 @@ export default {
         username: undefined,
         password: undefined,
         departmentId: undefined,
-        email: undefined
+        email: undefined,
+        id: undefined
       },
       showDialog: false,
       imagecropperShow: false,
@@ -189,13 +183,14 @@ export default {
     handleClose () {
       this.$emit('changeShow', 'false')
     },
+    //上传成功后的回调函数
     cropSuccess(data) {
       console.log(data)
       var oldImage = this.image;
       this.imagecropperShow = false
       this.user.avatar = this.image = data.data;
-      this.deleteAvatar(oldImage);
       this.imagecropperKey = this.imagecropperKey + 1
+      this.deleteAvatar(oldImage);
     },
     //删除之前的头像
     async deleteAvatar(oldImage){
@@ -214,5 +209,4 @@ export default {
 .el-upload__tip {
   line-height: 1.2;
 }
-
 </style>

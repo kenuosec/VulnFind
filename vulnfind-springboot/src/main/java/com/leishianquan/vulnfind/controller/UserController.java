@@ -112,6 +112,18 @@ public class UserController {
             return Result.fail(null);
         }
     }
+
+    @PostMapping("/deleteUser")
+    @ApiOperation(value = "删除用户")
+    public Result delUser(@RequestBody String id){
+        try {
+            userService.delUser(id);
+            return Result.succ(null);
+        }catch (Exception e){
+            return Result.fail(null);
+        }
+    }
+
 }
 
 
